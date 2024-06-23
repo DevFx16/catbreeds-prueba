@@ -1,4 +1,5 @@
 import 'package:catbreeds/models/breed.dart';
+import 'package:catbreeds/pages/detail.page.dart';
 import 'package:flutter/material.dart';
 
 class BreedTile extends StatelessWidget {
@@ -27,7 +28,9 @@ class BreedTile extends StatelessWidget {
                     style: const TextStyle(fontSize: 20),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => DetailPage(tile: tile)));
+                    },
                     icon: const Icon(Icons.visibility),
                   )
                 ],

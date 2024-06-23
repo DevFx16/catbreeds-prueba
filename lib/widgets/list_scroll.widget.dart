@@ -30,16 +30,17 @@ class _ListScrollState extends State<ListScroll> {
       controller: _controller,
       itemCount: provider.breeds.length + 1,
       itemBuilder: (context, index) {
-        if (index >= provider.breeds.length) {
+        if (index >= provider.breeds.length && provider.breeds.length >= provider.limit) {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: CircularProgressIndicator(),
             ),
           );
-        } else {
-          return BreedTile(tile: provider.breeds[index]);
+        } else if (provider.breeds.length <= provider.limit && index >= provider.breeds.length) {
+          return Container();
         }
+        return BreedTile(tile: provider.breeds[index]);
       },
     );
   }

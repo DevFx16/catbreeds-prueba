@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class BreedsProvider extends ChangeNotifier {
   List<Breed> _breeds = [];
+  List<Breed> _suggestionBreeds = [];
   final int _limit = 10;
   int _page = 0;
   bool _isLoading = true;
@@ -19,6 +20,7 @@ class BreedsProvider extends ChangeNotifier {
     _isLoading = true;
     final response = await CatBreedsService().getCatsBreeds({'limit': _limit, 'page': _page, 'q': _query});
     _breeds.addAll(response ?? []);
+    _suggestionBreeds = [...breeds];
     _isLoading = false;
     notifyListeners();
   }
@@ -30,7 +32,18 @@ class BreedsProvider extends ChangeNotifier {
 
   searchBreed(String value) {
     _query = value.isEmpty ? "a" : value;
+    _breeds.clear();
     getBreeds();
+  }
+
+  searchBreedSuggestion(String value) {
+    if (value.isEmpty) {
+      _suggestionBreeds = [...breeds];
+    } else {
+      _suggestionBreeds.clear();
+      _suggestionBreeds = _breeds.where((item) => item.name!.contains(value)).toList();
+    }
+    notifyListeners();
   }
 
   List<Breed> get breeds {
@@ -51,5 +64,9 @@ class BreedsProvider extends ChangeNotifier {
 
   String get query {
     return _query;
+  }
+
+  List<Breed> get suggestionBreeds {
+    return _suggestionBreeds;
   }
 }

@@ -20,18 +20,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 130,
-        flexibleSpace: const AppSearchBar(),
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.white,
-        shadowColor: Colors.white,
-      ),
-      body: RefreshIndicator(
-        onRefresh: context.read<BreedsProvider>().resetAll,
-        child: const ListScroll(),
+        appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: 120,
+          flexibleSpace: const AppSearchBar(),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.white,
+        ),
+        body: RefreshIndicator(
+          onRefresh: context.read<BreedsProvider>().resetAll,
+          child: const ListScroll(),
+        ),
       ),
     );
   }
